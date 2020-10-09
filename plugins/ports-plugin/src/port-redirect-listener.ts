@@ -16,7 +16,7 @@ import * as net from 'net';
  */
 export class PortRedirectListener {
 
-    private server: net.Server;
+    private server: net.Server | undefined;
 
     constructor(private readonly localPort: number, private readonly remoteHost: string, private readonly remotePort: number) {
 
@@ -67,6 +67,8 @@ export class PortRedirectListener {
     }
 
     stop(): void {
-        this.server.close();
+        if (this.server) {
+            this.server.close();
+        }
     }
 }

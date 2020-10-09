@@ -14,6 +14,85 @@
   "activationEvents": [
     "*"
   ],
+  "contributes": {
+    "viewsContainers": {
+      "right": [
+        {
+          "id": "endpoints",
+          "title": "Endpoints",
+          "icon": "resources/plug.svg"
+        }
+      ]
+    },
+    "views": {
+      "endpoints": [
+        {
+          "id": "endpoints",
+          "name": "Endpoints"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "portPlugin.filterOutPlugins",
+        "title": "Hide plugins endpoints",
+        "icon": {
+          "light": "resources/light/filter.svg",
+          "dark": "resources/dark/filter.svg"
+        }
+      },
+      {
+        "command": "portPlugin.filterInPlugins",
+        "title": "Show plugins endpoints",
+        "icon": {
+          "light": "resources/light/bullseye.svg",
+          "dark": "resources/dark/bullseye.svg"
+        }
+      },
+      {
+        "command": "portPlugin.openNewTabPort",
+        "title": "Open in a new tab",
+        "icon": {
+          "light": "resources/light/external-link.svg",
+          "dark": "resources/dark/external-link.svg"
+        }
+      },
+      {
+        "command": "portPlugin.preview",
+        "title": "Open in preview",
+        "icon": {
+          "light": "resources/light/eye.svg",
+          "dark": "resources/dark/eye.svg"
+        }
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "portPlugin.filterInPlugins",
+          "when": "view == endpoints && !portPluginShowPlugins",
+          "group": "navigation"
+        },
+        {
+          "command": "portPlugin.filterOutPlugins",
+          "when": "view == endpoints && portPluginShowPlugins",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "portPlugin.openNewTabPort",
+          "when": "view == endpoints && viewItem == publicHttpsEndpointOnline || view == endpoints && viewItem == publicPortOnline",
+          "group": "inline"
+        },
+        {
+          "command": "portPlugin.preview",
+          "when": "view == endpoints && viewItem == publicHttpsEndpointOnline",
+          "group": "inline"
+        }
+      ]
+    }
+  },
   "dependencies": {},
   "devDependencies": {
     "@eclipse-che/plugin": "latest",
@@ -38,7 +117,7 @@
     "theiaPlugin": "next"
   },
   "theiaPlugin": {
-    "backend": "lib/ports-plugin.js"
+    "backend": "lib/main.js"
   },
   "jest": {
     "collectCoverage": true,
